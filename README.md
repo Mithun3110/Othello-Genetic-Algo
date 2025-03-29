@@ -15,7 +15,8 @@ Frontend
 
 
 RUELS
-    - Adjacent cell where it can flip must be white
+    - Each time a player places the coin a coin must be flipped.
+    - When a coin is placed it must be seen to that the adjacent cell must be the opposite color.
     - Every move must be alternate
     - If a player has no moves the turn is passed to the next player
     - The game ends when the whole board is filled or when one player has exhausted all their coins.

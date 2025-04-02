@@ -24,3 +24,11 @@ RUELS
     - Totaly 64 coins where there are 4 on the board 2 white and 2 black
         D4 (White) | E4 (Black)
         D5 (Black) | E5 (White)
+
+Genes
+    - Edges
+    - Corners
+    - Centres
+    - Diagonals
+    - Stability(Unflippable coins)
+    - Coin difference (number of coins you have vs number of coins opponent)

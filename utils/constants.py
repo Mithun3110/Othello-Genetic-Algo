@@ -1,0 +1,4 @@
+BOARD_SIZE = 8
+WHITE = 1
+BLACK = -1
+EMPTY = 0

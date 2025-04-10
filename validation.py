@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from genetic_algo import GA
+from fitness_function import *
 
 # Constants for piece values
 BLACK = 1
@@ -80,7 +80,7 @@ def gene_agent_move(genes, board, player):
         board_copy = board.copy()
         make_move_board(board_copy, move[0], move[1], player)
         char_board = board_to_char(board_copy)
-        score = GA.evaluate_fitness(genes, char_board, 'B')
+        score = evaluate_fitness(genes, char_board, 'B')
         if score > best_score:
             best_score = score
             best_move = move

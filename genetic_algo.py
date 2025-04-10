@@ -97,8 +97,6 @@ def mutate(genes, mutation_rate=0.3, mutation_strength=0.1):
 def genetic_algorithm(num_generations=50):
     population_size = 20
     population = []
-
-    
     for _ in range(population_size):
         individual = Genes(0, 0, 0, 0, 0, 0)
         individual.create_random()

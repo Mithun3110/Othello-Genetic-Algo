@@ -8,11 +8,7 @@ import pickle
 from genes import Genes
 from genetic_algo import *
 from validation import *
-
-BLACK = 1    
-WHITE = -1
-EMPTY = 0
-
+from constants import BLACK, WHITE, EMPTY
 
 try:
     with open("best_genes.pkl", "rb") as f:
@@ -23,7 +19,7 @@ except Exception as e:
     sys.exit(1)
 
 
-# ---------------------- Pygame Setup ---------------------- #
+#Pygaem initialization
 pygame.init()
 
 # Board dimensions
@@ -47,7 +43,7 @@ pygame.display.set_caption("Othello - Human (White) vs AI (Black)")
 # Font for messages
 font = pygame.font.SysFont(None, 36)
 
-# ---------------------- Board Initialization ---------------------- #
+#Board Initialization
 def init_board():
     board = np.zeros((8, 8), dtype=int)
     # Standard Othello starting pieces
@@ -57,7 +53,7 @@ def init_board():
 
 board = init_board()
 
-# ---------------------- Drawing Functions ---------------------- #
+#Drawing Functions
 def draw_board(screen, board):
     screen.fill(BACKGROUND_COLOR)
     
@@ -89,7 +85,7 @@ def draw_message(text):
     screen.blit(message, message_rect)
     pygame.display.flip()
 
-# ---------------------- Game Over Check ---------------------- #
+#Game Over Check
 def game_over(board):
     moves_black = get_valid_moves(board, BLACK)
     moves_white = get_valid_moves(board, WHITE)
@@ -105,7 +101,7 @@ def get_winner(board):
     else:
         return "Tie"
 
-# ---------------------- Main Game Loop ---------------------- #
+#Main Game Loop
 def main():
     clock = pygame.time.Clock()
     user_turn = True  # Human plays as White; AI plays as Black.

@@ -4,10 +4,8 @@ import pickle
 from genes import Genes
 from validation import *
 from fitness_function import *
+from constants import BLACK, WHITE, EMPTY
 
-BLACK = 1
-WHITE = -1
-EMPTY = 0
 
 
 

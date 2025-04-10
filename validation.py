@@ -1,11 +1,8 @@
 import numpy as np
 import random
 from fitness_function import *
+from constants import BLACK, WHITE, EMPTY
 
-# Constants for piece values
-BLACK = 1
-WHITE = -1
-EMPTY = 0
 
 def board_to_char(board):
     char_board = []

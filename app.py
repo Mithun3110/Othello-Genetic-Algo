@@ -5,6 +5,8 @@ from genetic_algo import gene_agent_move
 from constants import WHITE, BLACK
 import pickle
 import numpy as np
+import time
+
 
 app = Flask(__name__)
 
@@ -35,6 +37,7 @@ def move():
 
     data = request.get_json()
     row, col = int(data['row']), int(data['col'])
+    
 
     if current_turn == WHITE and is_valid_move_board(board, row, col, WHITE):
         make_move_board(board, row, col, WHITE)

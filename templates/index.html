@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Othello Genetic AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Othello Genetic AI</h1>
+  <p class="turn-text">Turn: {{ 'White' if turn == 1 else 'Black' }}</p>
+
+  <div id="board-container">
+    <table id="board">
+      {% for i in range(8) %}
+      <tr>
+        {% for j in range(8) %}
+        <td class="cell" data-row="{{ i }}" data-col="{{ j }}">
+          {% if board[i][j] == 1 %}
+            <div class="piece white"></div>
+          {% elif board[i][j] == -1 %}
+            <div class="piece black"></div>
+          {% endif %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div id="status"></div>
+
+  <script>
+    function updateBoard(boardData) {
+      const board = document.getElementById('board');
+      const turnText = document.querySelector('.turn-text');
+      const status = document.getElementById('status');
+
+      board.innerHTML = ''; // Clear current board
+
+      for (let i = 0; i < 8; i++) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < 8; j++) {
+          const cell = document.createElement('td');
+          cell.className = 'cell';
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+
+          const value = boardData.board[i][j];
+          if (value === 1) {
+            const piece = document.createElement('div');
+            piece.className = 'piece white';
+            cell.appendChild(piece);
+          } else if (value === -1) {
+            const piece = document.createElement('div');
+            piece.className = 'piece black';
+            cell.appendChild(piece);
+          }
+
+          row.appendChild(cell);
+        }
+        board.appendChild(row);
+      }
+
+      if (boardData.game_over) {
+        status.innerText = `Game Over! Winner: ${boardData.winner}`;
+      } else {
+        turnText.innerText = `Turn: ${boardData.turn === 1 ? 'White' : 'Black'}`;
+        addClickHandlers();
+      }
+    }
+
+    function addClickHandlers() {
+      document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const row = cell.dataset.row;
+          const col = cell.dataset.col;
+
+          fetch('/move', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ row, col })
+          })
+          .then(res => res.json())
+          .then(data => {
+            updateBoard(data);  // Show human move + AI move after delay (handled in Flask)
+          });
+        });
+      });
+    }
+
+    // On load
+    addClickHandlers();
+  </script>
+</body>
+</html>

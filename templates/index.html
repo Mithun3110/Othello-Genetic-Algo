@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Othello Genetic AI</h1>
-  <p class="turn-text">Turn: {{ 'White' if turn == 1 else 'Black' }}</p>
+  <p class="turn-text">Turn: {{ 'Black' if turn == 1 else 'White' }}</p>
 
   <div id="board-container">
     <table id="board">
@@ -16,9 +16,9 @@
         {% for j in range(8) %}
         <td class="cell" data-row="{{ i }}" data-col="{{ j }}">
           {% if board[i][j] == 1 %}
-            <div class="piece white"></div>
+            <div class="piece white {% if last_ai_move == [i, j] %}ai-last-move{% endif %}"></div>
           {% elif board[i][j] == -1 %}
-            <div class="piece black"></div>
+            <div class="piece black {% if last_ai_move == [i, j] %}ai-last-move{% endif %}"></div>
           {% endif %}
         </td>
         {% endfor %}
@@ -34,8 +34,9 @@
       const board = document.getElementById('board');
       const turnText = document.querySelector('.turn-text');
       const status = document.getElementById('status');
+      const lastMove = boardData.last_ai_move;
 
-      board.innerHTML = ''; // Clear current board
+      board.innerHTML = '';
 
       for (let i = 0; i < 8; i++) {
         const row = document.createElement('tr');
@@ -46,13 +47,14 @@
           cell.dataset.col = j;
 
           const value = boardData.board[i][j];
-          if (value === 1) {
+          if (value === 1 || value === -1) {
             const piece = document.createElement('div');
-            piece.className = 'piece white';
-            cell.appendChild(piece);
-          } else if (value === -1) {
-            const piece = document.createElement('div');
-            piece.className = 'piece black';
+            piece.className = 'piece ' + (value === 1 ? 'white' : 'black');
+
+            if (lastMove && parseInt(i) === lastMove[0] && parseInt(j) === lastMove[1]) {
+              piece.classList.add('ai-last-move');
+            }
+
             cell.appendChild(piece);
           }
 
@@ -64,7 +66,7 @@
       if (boardData.game_over) {
         status.innerText = `Game Over! Winner: ${boardData.winner}`;
       } else {
-        turnText.innerText = `Turn: ${boardData.turn === 1 ? 'White' : 'Black'}`;
+        turnText.innerText = `Turn: ${boardData.turn === 1 ? 'Black' : 'White'}`;
         addClickHandlers();
       }
     }
@@ -82,13 +84,12 @@
           })
           .then(res => res.json())
           .then(data => {
-            updateBoard(data);  // Show human move + AI move after delay (handled in Flask)
+            updateBoard(data);
           });
         });
       });
     }
 
-    // On load
     addClickHandlers();
   </script>
 </body>

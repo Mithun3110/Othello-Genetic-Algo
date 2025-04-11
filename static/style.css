@@ -73,4 +73,11 @@ body {
     font-weight: bold;
     color: #eee;
   }
+
+  .ai-last-move {
+    box-shadow: 0 0 12px 4px yellow;
+    position: relative;
+    z-index: 2;
+  }
+  
   

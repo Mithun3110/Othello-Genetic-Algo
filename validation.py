@@ -3,6 +3,7 @@ import random
 from fitness_function import *
 from constants import BLACK, WHITE, EMPTY
 
+# minor changes to the original code for my part, was not able to push before
 
 def board_to_char(board):
     char_board = []
